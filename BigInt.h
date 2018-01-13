@@ -243,6 +243,17 @@ public:
             pon= big[0];
         }
     }
+    BigInt(long l){
+        string big= toString(l);
+        if(big[0] != '-' && big[0] != '+'){
+            bigInt= big;
+            pon= '+';
+        }
+        else{
+            bigInt=string(big.begin()+1, big.end());
+            pon= big[0];
+        }
+    }
     BigInt (char p, string big){
         pon= p;
         bigInt= big;
@@ -278,6 +289,11 @@ public:
         if(bigInt != b.bigInt) return false;
         return true;
     }
+    bool operator != (BigInt b){
+        if(pon != b.pon) return true;
+        if(bigInt != b.bigInt) return true;
+        return false;
+    }
     bool operator <= (BigInt b){
         if(pon != b.pon) return pon< b.pon;
         int i = cmp(bigInt, b.bigInt);
@@ -295,7 +311,7 @@ public:
         return false;
     }
 
-    // phép toán
+    // phép toán 2 ngôi
     BigInt operator + (BigInt b){
         if(bigInt[0] == '0') return b;
         if(b.bigInt[0]== '0') return BigInt(pon,bigInt);
@@ -342,7 +358,26 @@ public:
         if(pon=='-' && !isEven(b.bigInt)) p='-';
         return BigInt(p,x);
     }
-
+    void operator += (BigInt b){
+        BigInt temp = BigInt(pon,bigInt) + b;
+        pon= temp.pon;
+        bigInt= temp.bigInt;
+    }
+    void operator -= (BigInt b){
+        BigInt temp = BigInt(pon,bigInt) - b;
+        pon= temp.pon;
+        bigInt= temp.bigInt;
+    }
+    void operator *= (BigInt b){
+        BigInt temp = BigInt(pon,bigInt) * b;
+        pon= temp.pon;
+        bigInt= temp.bigInt;
+    }
+    void operator /= (BigInt b){
+        BigInt temp = BigInt(pon,bigInt) / b;
+        pon= temp.pon;
+        bigInt= temp.bigInt;
+    }
     // nhập xuất
     friend ostream & operator << (ostream & out, BigInt b) {
         if(b.pon =='-' && b.bigInt[0]!= '0') out<<'-';
