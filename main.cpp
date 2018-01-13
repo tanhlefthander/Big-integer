@@ -14,6 +14,12 @@ int main(){
     cout<<"a ^ b = "<<(a^b)<<endl;
     a="3454";
     b=-234342;
+    cout<<b.toString()<<endl;
     cout<<a+b<<endl;
+    b[3]= '9';
+    cout<<b<<endl;
+    b.random(20);
+    cout<<b<<endl;
+
     return 0;
 }

@@ -3,6 +3,8 @@
 #include <string>
 #include <algorithm>
 #include <sstream>
+#include <stdlib.h>
+#include <time.h>
 using namespace std;
 typedef pair< string , string > QR;
 class BigInt{
@@ -226,7 +228,22 @@ private: // Các hàm bổ trợ
     string pow(string a,string b){
         return pow10(a,b);
     }
-
+    string randomChar( int length){
+        /* initialize random seed: */
+        srand (time(NULL));
+        string s;
+        while(s.size() != length){
+            int x= rand() % 10;
+            s+= char(x+ 48);
+        }
+        if(s[0]=='0'){
+            while(s[0] == '0'){
+                int x= rand() % 10;
+                s[0]= x+ 48;
+            }
+        }
+        return s;
+    }
 public:
     // Cấu tử
     BigInt(){
@@ -390,6 +407,18 @@ public:
         in>>s;
         b= BigInt(s);
         return in;
+    }
+    //
+    string toString(){
+        if(pon == '-') return pon + bigInt;
+        return bigInt;
+    }
+    char& operator [] (int i){ // & cho phép gán b[3]= '9'
+        return bigInt[i];
+    }
+    void random(int length){
+        bigInt =randomChar(length);
+        pon='+';
     }
 
 };
