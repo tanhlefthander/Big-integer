@@ -74,7 +74,7 @@ private: // Các hàm bổ trợ
         if(i!= 0) return string(res.begin()+i, res.end());
         return res;
     }
-    string dual( string s){ // chia đôi
+    string divide2( string s){ // chia đôi
         // O(n)
         int c;
         int flag= 0;
@@ -135,7 +135,7 @@ private: // Các hàm bổ trợ
             swap(a,b);
         if(b=="1") return a;
         if(b=="0") return "0";
-        kq= mulLogb(a, dual(b));
+        kq= mulLogb(a, divide2(b));
         kq= add(kq,kq);
         if(!isEven(b)) kq= add(kq,a);
         return kq;
@@ -179,7 +179,7 @@ private: // Các hàm bổ trợ
         if(c == 0) return QR("1","0");
         if(c < 0) return QR("0",a);
         string q,r;
-        QR qr= divideLog(dual(a),b);
+        QR qr= divideLog(divide2(a),b);
         q= add(qr.first, qr.first);
         r= add(qr.second, qr.second);
         if(!isEven(a)) r= add(r,"1");
@@ -199,7 +199,7 @@ private: // Các hàm bổ trợ
         if(b=="0") return "1";
         if(b=="2") return mul(a,a);
         if(b=="1") return a;
-        string x= pow2(a,dual(b));
+        string x= pow2(a,divide2(b));
         x= mul(x,x);
         if(!isEven(b)) x= mul(x,a);
         //cout<<a<<" "<<b<<" "<<x<<endl;
