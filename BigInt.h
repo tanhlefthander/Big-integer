@@ -76,6 +76,7 @@ private: // Các hàm bổ trợ
     }
     string divide2( string s){ // chia đôi
         // O(n)
+        if(s.size()==1 && s[0]<='0') return "0";
         int c;
         int flag= 0;
         for(int i=0; i<s.size();i++){
@@ -85,8 +86,9 @@ private: // Các hàm bổ trợ
             c= c/2;
             s[i]= c+ 48;
         }
-        if(s[0]=='0'&& s.size()>1) s.erase(s.begin(),s.begin()+1);
-        return s;
+        int i=0;
+        if(s[0]=='0'&& s.size()>1) i=1;
+        return string (s.begin() +i, s.end());
     }
     bool isEven(string a){ // kiểm tra số chẵn
         char c= a[a.size()-1];
@@ -110,6 +112,7 @@ private: // Các hàm bổ trợ
         return a;
     }
     string divide10 (string a){
+        if(cmp(a,"10")== -1) return "0";
         return string(a.begin(), a.end()-1);
     }
     string mul10(string a){
@@ -155,7 +158,7 @@ private: // Các hàm bổ trợ
     QR divide(string a, string b){
         // O(n^2) ý tưởng dựa vào phép chia tay
         int i=b.size();
-        if(a.size()< b.size()) return QR("0",a);
+        if(cmp(a,b)== -1) return QR("0",a);
         string x(a.begin(),a.begin()+ i),res; // lấy trước x sao cho x.size = b.size
         //cout<<x<<endl;
         QR qr=preDivide(x,b);
@@ -196,6 +199,7 @@ private: // Các hàm bổ trợ
     }
     string pow2(string a, string b){ // a^b ý tưởng giảm giần mũ đi 2 lần
         //O(n*m*log b)
+        //cout<<a<<" "<<b<<endl;
         if(b=="0") return "1";
         if(b=="2") return mul(a,a);
         if(b=="1") return a;
@@ -203,16 +207,20 @@ private: // Các hàm bổ trợ
         x= mul(x,x);
         if(!isEven(b)) x= mul(x,a);
         //cout<<a<<" "<<b<<" "<<x<<endl;
+        a.clear();
+        b.clear();
         return x;
     }
     string pow10(string a, string b){ // a^b ý tưởng giảm dần mũ đi 10 lần
         //O(n*m*m*log10)
-        if(b== "10" || (b.size()== 1 && b[0]<'9')) return pow2(a,b);
+        if(cmp(b,"10")== 0 ||b.size()== 1 ) return pow2(a,b);
         string x= pow10(a,divide10(b));
         x= pow2(x,"10");
         char c = b[b.size()-1];
-        if(c!='0') x= mul(x,pow2(a,""+c));
+        if(c!='0') x= mul(x,pow2(a,string()+c));
         //cout<<a<<" "<<b<<" "<<x<<endl;
+        a.clear();
+        b.clear();
         return x;
     }
     string pow(string a,string b){
@@ -231,7 +239,7 @@ public:
             pon= '+';
         }
         else{
-            bigInt.append(big.begin()+1, big.end());
+            bigInt=string(big.begin()+1, big.end());
             pon= big[0];
         }
     }
@@ -294,12 +302,14 @@ public:
         if(pon == b.pon) return BigInt(pon,add(bigInt, b.bigInt));
         int i= cmp(bigInt,b.bigInt);
         if(i == 0) return BigInt();
+        //cout<<i<<endl;
         string s= sub(bigInt, b.bigInt);
-        if(pon=='-')
+        if(pon=='-'){
             if(i == 1) return BigInt('-', s);
             else return ('+',s);
+        }
         if(i == 1) return BigInt('+', s);
-        return ('-',s);
+        return BigInt('-',s);
     }
     BigInt operator - (BigInt b){
         // a - b = a + (-b)
