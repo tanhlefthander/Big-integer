@@ -18,7 +18,7 @@ int main(){
     cout<<a+b<<endl;
     b[3]= '9';
     cout<<b<<endl;
-    b.random(20);
+    b.random(2000);
     cout<<b<<endl;
 
     return 0;
