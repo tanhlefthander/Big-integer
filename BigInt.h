@@ -46,9 +46,16 @@ public:
         pon= p;
         bigInt= big;
     }
+    void change(){ // đổi dấu
+        pon= changeD(pon);
+    }
     // kích thước
     long size(){
         return bigInt.size();
+    }
+    bool isMinus(){ // âm
+        if(pon=='-') return true;
+        return false;
     }
     // phép gán
     void operator = (string big){
@@ -101,6 +108,22 @@ public:
 
     // phép toán 2 ngôi
     BigInt operator + (BigInt b){
+        if(bigInt[0] == '0') return b;
+        if(b.bigInt[0]== '0') return BigInt(pon,bigInt);
+        if(pon == b.pon) return BigInt(pon,add(bigInt, b.bigInt));
+        int i= cmp(bigInt,b.bigInt);
+        if(i == 0) return BigInt();
+        //cout<<i<<endl;
+        string s= sub(bigInt, b.bigInt);
+        if(pon=='-'){
+            if(i == 1) return BigInt('-', s);
+            else return ('+',s);
+        }
+        if(i == 1) return BigInt('+', s);
+        return BigInt('-',s);
+    }
+    BigInt operator + (string  x){
+        BigInt b(x);
         if(bigInt[0] == '0') return b;
         if(b.bigInt[0]== '0') return BigInt(pon,bigInt);
         if(pon == b.pon) return BigInt(pon,add(bigInt, b.bigInt));

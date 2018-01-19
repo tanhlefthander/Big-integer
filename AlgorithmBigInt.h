@@ -157,6 +157,8 @@ QR divide(string a, string b){
         res+= qr.first;
         //cout<<x<<" "<<res<<endl;
     }
+
+    if(x=="") x="0";
     for(i=0; i<res.size();i++)
         if(res[i]!= '0') break;
     if(i == 0) return QR(res,x);
