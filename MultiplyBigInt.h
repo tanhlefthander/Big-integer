@@ -1,5 +1,4 @@
 #pragma once
-#include "LibBigInt.h"
 #include "AddBigInt.h"
 string mulChar(string a, char c);
 /** < Phụ > Hàm nhân 1 số lớn (string) với  1 số có 1 chữ số (char)

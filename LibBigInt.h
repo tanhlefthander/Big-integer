@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <stdlib.h>
+#include <time.h>
 using namespace std;
 void balance (string &a, string &b);
 /** < Phụ > Hàm cân bằng độ dài [void]
@@ -36,6 +38,8 @@ string mulBy10(string a);
 * Hàm sử dụng : mul
 **/
 //===================================//
+string randomChar( int length);
+// Hàm lấy số lớn ngẫu nhiên có length chữ sô
 //
 //
 //
@@ -64,4 +68,20 @@ string divideBy10 (string a){
 string mulBy10(string a){
     a+='0';
     return a;
+}
+string randomChar( int length){
+    /* initialize random seed: */
+    srand (time(NULL));
+    string s;
+    while(s.size() != length){
+        int x= rand() % 10;
+        s+= char(x+ 48);
+    }
+    if(s[0]=='0'){
+        while(s[0] == '0'){
+            int x= rand() % 10;
+            s[0]= x+ 48;
+        }
+    }
+    return s;
 }

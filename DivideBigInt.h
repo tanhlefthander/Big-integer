@@ -1,5 +1,5 @@
 #pragma once
-#include "LibBigInt.h"
+#include "SubtractBigInt.h"
 typedef pair< string , string > QR;
 /** Kiểu dữ liệu QR
 * Được định nghĩa bằng kiểu dữ liệu pair
